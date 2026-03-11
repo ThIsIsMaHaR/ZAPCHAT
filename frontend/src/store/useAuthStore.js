@@ -3,10 +3,10 @@ import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-// 🚀 FIX: Production mein "/" ki jagah asli backend URL point karna zaroori hai
+// 🚀 FIX: Socket ke liye sirf domain, /api nahi
 const BASE_URL = import.meta.env.MODE === "development" 
     ? "http://localhost:5001" 
-    : "https://your-zapchat-backend.onrender.com"; // 👈 Yahan apna Render URL dalo
+    : "https://your-zapchat-backend.onrender.com"; // 👈 APNA RENDER URL YAHAN DALO (No /api)
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -76,7 +76,6 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       toast.success("Profile updated successfully");
     } catch (error) {
-      console.log("error in update profile:", error);
       toast.error(error.response?.data?.message || "Update failed");
     } finally {
       set({ isUpdatingProfile: false });
@@ -85,14 +84,10 @@ export const useAuthStore = create((set, get) => ({
 
   connectSocket: () => {
     const { authUser } = get();
-    // Agar user logged in nahi hai ya socket pehle se connected hai toh return kar jao
     if (!authUser || get().socket?.connected) return;
 
     const socket = io(BASE_URL, {
-      query: {
-        userId: authUser._id,
-      },
-      // Production mein credentials pass karna zaroori hai
+      query: { userId: authUser._id },
       withCredentials: true,
     });
     

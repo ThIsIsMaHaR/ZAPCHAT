@@ -11,16 +11,16 @@ import { app, server } from "./lib/socket.js";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5001; // Fallback port
+const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-// 🚀 FIX 1: Production CORS Configuration
+// 🚀 CONFIG: Production CORS
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://your-zapchat-frontend.vercel.app", // 👈 Yahan apna ZapChat Vercel link dalo
+  "https://your-zapchat-frontend.vercel.app", // 👈 APNA VERCEL LINK YAHAN DALO
 ];
 
 app.use(
@@ -36,20 +36,19 @@ app.use(
   })
 );
 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// 🚀 FIX 2: Static Path for Render/Vercel
+// Static files for Production
 if (process.env.NODE_ENV === "production") {
-  // Production mein aksar frontend aur backend ek hi folder structure mein hote hain
   app.use(express.static(path.join(__dirname, "frontend/dist")));
-
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
   });
 }
 
 server.listen(PORT, () => {
-  console.log("🚀 ZapChat Server is running on PORT: " + PORT);
+  console.log("🚀 Server running on PORT: " + PORT);
   connectDB();
 });
