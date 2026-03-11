@@ -17,26 +17,31 @@ const __dirname = path.resolve();
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-// 🚀 FIXED CORS: Adding your specific Vercel URL
+// 🚀 FIXED CORS
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://zapchat-wine.vercel.app" // 👈 Fixed your link here
-    ],
+    origin: ["http://localhost:5173", "https://zapchat-wine.vercel.app"],
     credentials: true,
   })
 );
 
-// API Routes
+// API Routes (Ye hamesha static files se upar hone chahiye)
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Static files for Production
+// 🚀 FINAL PRODUCTION PATH FIX
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "frontend/dist")));
+  // Pehle check karo ki dist folder mil raha hai
+  const frontendPath = path.join(__dirname, "frontend", "dist");
+  app.use(express.static(frontendPath));
+
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+    res.sendFile(path.join(frontendPath, "index.html"));
+  });
+} else {
+  // Agar production nahi hai toh basic message dikhao taki "Cannot GET /" na aaye
+  app.get("/", (req, res) => {
+    res.send("API is running...");
   });
 }
 
