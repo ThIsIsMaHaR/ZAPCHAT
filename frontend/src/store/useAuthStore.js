@@ -3,10 +3,10 @@ import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-// 🚀 FIX: Socket ke liye sirf domain, /api nahi
+// 🚀 FIX: Socket ke liye domain chahiye, /api nahi
 const BASE_URL = import.meta.env.MODE === "development" 
     ? "http://localhost:5001" 
-    : "https://your-zapchat-backend.onrender.com"; // 👈 APNA RENDER URL YAHAN DALO (No /api)
+    : "https://zapchat-backend-abhishek.onrender.com"; // 👈 Apna Render URL yahan dalo (बिना /api के)
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,

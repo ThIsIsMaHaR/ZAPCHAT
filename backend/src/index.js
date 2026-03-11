@@ -17,10 +17,10 @@ const __dirname = path.resolve();
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-// 🚀 CONFIG: Production CORS
+// 🚀 CONFIG: Production CORS (Whitelist your frontend)
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://your-zapchat-frontend.vercel.app", // 👈 APNA VERCEL LINK YAHAN DALO
+  "https://abhisheks-zapchat.vercel.app", // 👈 Yahan apna ZapChat Vercel link dalo
 ];
 
 app.use(
@@ -36,7 +36,7 @@ app.use(
   })
 );
 
-// Routes
+// Routes configuration
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
@@ -49,6 +49,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 server.listen(PORT, () => {
-  console.log("🚀 Server running on PORT: " + PORT);
+  console.log("🚀 ZapChat Server running on PORT: " + PORT);
   connectDB();
 });
