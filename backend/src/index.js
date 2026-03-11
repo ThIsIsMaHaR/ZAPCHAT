@@ -14,11 +14,11 @@ dotenv.config();
 const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
-// 🚀 MIDDLEWARE: Ye order mat badalna
+// 🚀 MIDDLEWARE
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-// 🚀 FIXED CORS: Direct assignment is more stable on Render
+// 🚀 FIXED CORS: Dedicated for your Vercel URL
 app.use(
   cors({
     origin: "https://zapchat-wine.vercel.app",
@@ -28,17 +28,33 @@ app.use(
   })
 );
 
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
+// 🚀 PRODUCTION STATIC FILES LOGIC
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "frontend/dist")));
+  // Render ke folder structure ke hisaab se absolute path
+  const frontendPath = path.join(__dirname, "frontend", "dist");
+  
+  app.use(express.static(frontendPath));
+
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+    res.sendFile(path.join(frontendPath, "index.html"), (err) => {
+      if (err) {
+        // Agar dist folder nahi mil raha toh API mode mein error na de
+        res.status(200).json({ message: "API is Live. Frontend build not served from Backend." });
+      }
+    });
   });
+} else {
+    app.get("/", (req, res) => {
+        res.send("Server is running in Development mode...");
+    });
 }
 
+// 🚀 SERVER LISTEN
 server.listen(PORT, () => {
-  console.log("🚀 Server running on PORT: " + PORT);
+  console.log("🚀 ZapChat Server running on PORT: " + PORT);
   connectDB();
 });
