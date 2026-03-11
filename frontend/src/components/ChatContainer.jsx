@@ -21,9 +21,7 @@ const ChatContainer = () => {
 
   useEffect(() => {
     getMessages(selectedUser._id);
-
     subscribeToMessages();
-
     return () => unsubscribeFromMessages();
   }, [selectedUser._id, getMessages, subscribeToMessages, unsubscribeFromMessages]);
 
@@ -35,7 +33,7 @@ const ChatContainer = () => {
 
   if (isMessagesLoading) {
     return (
-      <div className="flex-1 flex flex-col overflow-auto">
+      <div className="flex-1 flex flex-col overflow-auto bg-base-100/50">
         <ChatHeader />
         <MessageSkeleton />
         <MessageInput />
@@ -44,49 +42,72 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-auto">
+    <div className="flex-1 flex flex-col overflow-auto bg-base-100 transition-all">
       <ChatHeader />
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
-          <div
-            key={message._id}
-            className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
-            ref={messageEndRef}
-          >
-            <div className=" chat-image avatar">
-              <div className="size-10 rounded-full border">
-                <img
-                  src={
-                    message.senderId === authUser._id
-                      ? authUser.profilePic || "/avatar.png"
-                      : selectedUser.profilePic || "/avatar.png"
-                  }
-                  alt="profile pic"
-                />
+      {/* 🚀 Chat Area with Subtle Pattern/Gradient */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar bg-[url('/bg-pattern.png')] bg-repeat">
+        {messages.map((message) => {
+          const isMe = message.senderId === authUser._id;
+          
+          return (
+            <div
+              key={message._id}
+              className={`chat ${isMe ? "chat-end" : "chat-start"} animate-in fade-in slide-in-from-bottom-2 duration-300`}
+              ref={messageEndRef}
+            >
+              <div className="chat-image avatar">
+                <div className="size-9 rounded-full border border-base-300 shadow-sm transition-transform hover:scale-110">
+                  <img
+                    src={isMe ? authUser.profilePic || "/avatar.png" : selectedUser.profilePic || "/avatar.png"}
+                    alt="profile pic"
+                  />
+                </div>
+              </div>
+              
+              <div className="chat-header mb-1 flex items-center gap-1">
+                <time className="text-[10px] font-medium opacity-40 uppercase tracking-wider">
+                  {formatMessageTime(message.createdAt)}
+                </time>
+              </div>
+
+              {/* 🚀 Sleek Bubble Design */}
+              <div 
+                className={`chat-bubble max-w-[85%] md:max-w-[70%] shadow-md p-3 px-4 rounded-2xl flex flex-col gap-2 transition-all
+                  ${isMe 
+                    ? "bg-primary text-primary-content rounded-tr-none" 
+                    : "bg-base-200 text-base-content rounded-tl-none border border-base-300/50"
+                  }`}
+              >
+                {message.image && (
+                  <div className="relative group overflow-hidden rounded-xl">
+                    <img
+                      src={message.image}
+                      alt="Attachment"
+                      className="max-h-[300px] w-full object-cover transition-transform group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                )}
+                {message.text && (
+                  <p className="text-sm md:text-base leading-relaxed break-words">
+                    {message.text}
+                  </p>
+                )}
+              </div>
+              
+              {/* Delivery Status Indicator (Optional Visual) */}
+              <div className="chat-footer opacity-50 text-[10px] mt-1">
+                {isMe ? "Delivered" : ""}
               </div>
             </div>
-            <div className="chat-header mb-1">
-              <time className="text-xs opacity-50 ml-1">
-                {formatMessageTime(message.createdAt)}
-              </time>
-            </div>
-            <div className="chat-bubble flex flex-col">
-              {message.image && (
-                <img
-                  src={message.image}
-                  alt="Attachment"
-                  className="sm:max-w-[200px] rounded-md mb-2"
-                />
-              )}
-              {message.text && <p>{message.text}</p>}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <MessageInput />
     </div>
   );
 };
+
 export default ChatContainer;
