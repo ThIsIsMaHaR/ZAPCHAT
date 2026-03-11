@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff, Loader2, Lock, Mail, Zap, ChevronRight } from "lucide-react";
+import { Eye, EyeOff, Loader2, Lock, Mail, Zap, Terminal } from "lucide-react";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,112 +14,127 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#050505] relative overflow-hidden font-sans">
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#020202] relative overflow-hidden font-sans p-4">
       
-      {/* 🚀 Animated Background Elements (Eye-Catching Blobs) */}
-      <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-primary/20 rounded-full blur-[150px] animate-pulse" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-accent/20 rounded-full blur-[150px] animate-pulse delay-1000" />
-      <div className="absolute top-[30%] right-[10%] w-[30%] h-[30%] bg-blue-500/10 rounded-full blur-[120px] animate-bounce [animation-duration:10s]" />
+      {/* 🚀 Extreme Background Visuals */}
+      <div className="absolute top-0 left-0 w-full h-full">
+        <div className="absolute top-[-10%] left-[-10%] size-[500px] bg-primary/20 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] size-[500px] bg-accent/20 rounded-full blur-[120px] animate-pulse delay-700" />
+        {/* Grid Pattern Overlay */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 pointer-events-none" />
+      </div>
 
-      <div className="z-10 w-full max-w-[440px] px-6">
-        {/* Logo Section */}
-        <div className="flex flex-col items-center mb-10 group">
-          <div className="size-16 rounded-3xl bg-gradient-to-br from-primary to-accent p-[2px] shadow-2xl shadow-primary/20 rotate-3 group-hover:rotate-12 transition-all duration-500">
-            <div className="w-full h-full bg-black rounded-[22px] flex items-center justify-center">
-               <Zap className="size-8 text-primary fill-primary/20" />
+      <div className="relative z-10 w-full max-w-6xl grid lg:grid-cols-12 gap-0 border border-white/5 rounded-[2.5rem] bg-white/[0.02] backdrop-blur-3xl shadow-2xl overflow-hidden">
+        
+        {/* 🚀 LEFT SECTION: The "Eye-Candy" Branding */}
+        <div className="lg:col-span-7 p-12 lg:p-20 flex flex-col justify-between relative overflow-hidden border-r border-white/5 bg-gradient-to-br from-white/[0.02] to-transparent">
+          <div className="flex items-center gap-3">
+             <div className="size-12 rounded-2xl bg-primary flex items-center justify-center shadow-[0_0_30px_rgba(var(--p),0.5)]">
+                <Zap className="size-7 text-primary-content fill-current" />
+             </div>
+             <span className="text-2xl font-black tracking-tighter text-white">ZAPCHAT <span className="text-primary italic">PRO</span></span>
+          </div>
+
+          <div className="relative z-10 space-y-6 py-20">
+            <h1 className="text-6xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter">
+              BEYOND <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary animate-gradient">LIMITS.</span>
+            </h1>
+            <p className="text-xl text-zinc-400 font-medium max-w-md leading-relaxed">
+              The world's fastest real-time messaging engine, re-engineered for elite performance.
+            </p>
+            <div className="flex items-center gap-6 pt-4">
+               <div className="flex -space-x-3">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="size-10 rounded-full border-2 border-[#020202] bg-zinc-800 flex items-center justify-center text-[10px] font-bold text-white overflow-hidden">
+                       <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="user" />
+                    </div>
+                  ))}
+               </div>
+               <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">+12K ACTIVE USERS</p>
             </div>
           </div>
-          <h1 className="text-3xl font-black mt-6 tracking-tighter text-white">ZAPCHAT</h1>
-          <div className="h-1 w-12 bg-primary rounded-full mt-2" />
+
+          <div className="flex items-center gap-4 text-[10px] font-black tracking-[0.3em] text-zinc-600 uppercase">
+             <Terminal className="size-4" /> <span>v2.0.4-STABLE_RELEASE</span>
+          </div>
+          
+          {/* Abstract 3D-like Shape */}
+          <div className="absolute -bottom-20 -right-20 size-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
         </div>
 
-        {/* 🚀 Glassmorphism Card */}
-        <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[40px] p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)] relative overflow-hidden">
-          
-          <div className="relative z-10">
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-white mb-2">Login</h2>
-              <p className="text-zinc-500 text-sm font-medium">Welcome back! Please enter your details.</p>
+        {/* 🚀 RIGHT SECTION: The High-End Form */}
+        <div className="lg:col-span-5 p-8 lg:p-16 flex flex-col justify-center bg-white/[0.01]">
+          <div className="w-full max-w-sm mx-auto space-y-10">
+            <div>
+              <h2 className="text-4xl font-black text-white tracking-tight mb-2">AUTH_PORTAL</h2>
+              <div className="h-1 w-12 bg-primary rounded-full mb-6" />
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Input Group */}
               <div className="space-y-4">
-                <div className="relative group">
-                  <input
-                    type="email"
-                    className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-primary/50 focus:bg-white/10 transition-all text-white placeholder:text-zinc-600"
-                    placeholder="Email Address"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                  />
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-500 group-focus-within:text-primary transition-colors" />
+                <div className="group">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4 mb-2 block group-focus-within:text-primary transition-colors">Credential_ID</label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-4 pl-12 pr-4 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all text-white font-medium"
+                      placeholder="Enter your email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      required
+                    />
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-600 group-focus-within:text-primary transition-colors" />
+                  </div>
                 </div>
 
-                <div className="relative group">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-12 outline-none focus:border-primary/50 focus:bg-white/10 transition-all text-white placeholder:text-zinc-600"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    required
-                  />
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-500 group-focus-within:text-primary transition-colors" />
-                  <button
-                    type="button"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white transition-colors"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
+                <div className="group">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4 mb-2 block group-focus-within:text-primary transition-colors">Access_Key</label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-4 pl-12 pr-12 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all text-white font-medium"
+                      placeholder="••••••••"
+                      value={formData.password}
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      required
+                    />
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-600 group-focus-within:text-primary transition-colors" />
+                    <button
+                      type="button"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-white transition-colors"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex justify-end">
-                <Link to="#" className="text-xs font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-widest">
-                  Forgot Password?
-                </Link>
-              </div>
-
-              {/* 🚀 Submit Button with Glow */}
               <button 
                 type="submit" 
-                className="group w-full h-14 bg-primary text-primary-content rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 active:scale-95 disabled:opacity-50"
+                className="btn btn-primary w-full h-16 rounded-2xl font-black text-lg tracking-widest uppercase shadow-[0_20px_40px_-10px_rgba(var(--p),0.3)] hover:scale-[1.02] active:scale-95 transition-all"
                 disabled={isLoggingIn}
               >
                 {isLoggingIn ? (
                   <Loader2 className="size-6 animate-spin" />
                 ) : (
-                  <>
-                    <span>SIGN IN</span>
-                    <ChevronRight className="size-5 group-hover:translate-x-1 transition-transform" />
-                  </>
+                  "Initiate Session"
                 )}
               </button>
             </form>
 
-            <div className="mt-8 text-center">
-              <p className="text-zinc-500 text-sm">
-                New to the platform?{" "}
-                <Link to="/signup" className="text-white font-bold hover:text-primary transition-colors">
-                  Create account
+            <div className="text-center">
+              <p className="text-zinc-500 font-medium">
+                Identity not found?{" "}
+                <Link to="/signup" className="text-white font-bold hover:text-primary transition-colors underline decoration-primary/30 underline-offset-4">
+                  Create ID
                 </Link>
               </p>
             </div>
           </div>
-
-          {/* Abstract Decoration inside card */}
-          <div className="absolute top-[-20px] right-[-20px] size-20 bg-primary/20 rounded-full blur-2xl" />
         </div>
 
-        {/* Footer badges */}
-        <div className="mt-8 flex justify-center items-center gap-6 opacity-20">
-           <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-white" />
-           <span className="text-[10px] font-black tracking-[0.2em] text-white uppercase whitespace-nowrap">End-to-End Encrypted</span>
-           <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-white" />
-        </div>
       </div>
     </div>
   );
