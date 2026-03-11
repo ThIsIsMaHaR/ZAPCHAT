@@ -17,26 +17,18 @@ const __dirname = path.resolve();
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-// 🚀 CONFIG: Production CORS (Whitelist your frontend)
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://abhisheks-zapchat.vercel.app", // 👈 Yahan apna ZapChat Vercel link dalo
-];
-
+// 🚀 FIXED CORS: Adding your specific Vercel URL
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS Error: Origin not allowed"));
-      }
-    },
+    origin: [
+      "http://localhost:5173",
+      "https://zapchat-wine.vercel.app" // 👈 Fixed your link here
+    ],
     credentials: true,
   })
 );
 
-// Routes configuration
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
