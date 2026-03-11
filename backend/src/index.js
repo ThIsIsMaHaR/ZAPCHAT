@@ -14,38 +14,31 @@ dotenv.config();
 const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
+// 🚀 MIDDLEWARE: Ye order mat badalna
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-// 🚀 FIXED CORS
+// 🚀 FIXED CORS: Direct assignment is more stable on Render
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://zapchat-wine.vercel.app"],
+    origin: "https://zapchat-wine.vercel.app",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
   })
 );
 
-// API Routes (Ye hamesha static files se upar hone chahiye)
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// 🚀 FINAL PRODUCTION PATH FIX
 if (process.env.NODE_ENV === "production") {
-  // Pehle check karo ki dist folder mil raha hai
-  const frontendPath = path.join(__dirname, "frontend", "dist");
-  app.use(express.static(frontendPath));
-
+  app.use(express.static(path.join(__dirname, "frontend/dist")));
   app.get("*", (req, res) => {
-    res.sendFile(path.join(frontendPath, "index.html"));
-  });
-} else {
-  // Agar production nahi hai toh basic message dikhao taki "Cannot GET /" na aaye
-  app.get("/", (req, res) => {
-    res.send("API is running...");
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
   });
 }
 
 server.listen(PORT, () => {
-  console.log("🚀 ZapChat Server running on PORT: " + PORT);
+  console.log("🚀 Server running on PORT: " + PORT);
   connectDB();
 });
